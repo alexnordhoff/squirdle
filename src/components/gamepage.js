@@ -1,9 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
 
-import { Col, Container, Row, Button, Form, Image } from 'react-bootstrap'
+import { Col, Container, Row, Button, Form, Image } from 'react-bootstrap';
 import image from '../assets/squirdle_logo_1.png'
-import pokelist from '../assets/pokelist.json'
+import pokelist from '../assets/pokelist.json';
+
+var pokeImages = [
+    require('../assets/images/bulbasaur.png'),
+    require('../assets/images/charmander.png'),
+    require('../assets/images/squirtle.png')
+]
 
 const GamePage = () => {
     // let navigate = useNavigate(); // For router navigation
@@ -18,14 +24,17 @@ const GamePage = () => {
 
     const [guessIndex, setguessIndex] = useState(0);
     const [guess, setguess] = useState("");
-    const [source, setsource] = useState();
+    const [source, setsource] = useState("");
 
     useEffect(() => {
         const date = new Date();
         const rand_date_num = Math.floor(((date.getUTCDay() + date.getUTCMonth() + date.getUTCFullYear()) * (date.getUTCDay() + date.getUTCMonth()) / date.getUTCDay())) % pokelist.length;
-        setsource(pokelist[rand_date_num].img);
         setindex(rand_date_num);
     }, []); 
+
+    useEffect(() => {
+        setsource(pokelist[index].img);    
+    }, [index]); 
 
 
     const guessMade = () => {
@@ -57,14 +66,12 @@ const GamePage = () => {
             alert("You have used all 6 guesses for today.")
         }
     }
+
  
     return (
         <Container style={{color: 'white', fontSize: "3vh"}}>
             <hr />
-            {source}
-            <Image src='../assets/bulbasaur.png' alt="image of the pokemon of the day" style={{height: 'auto', width:'100%', marginBottom: '2vh'}}/>
-
-
+            <Image src={pokeImages[index]} alt="image of the pokemon of the day" style={{height: '35vh', width:'35vh', marginBottom: '2vh'}} />
 
             <Row style={{paddingBottom: '2vh'}}>
                 <Col />
