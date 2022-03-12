@@ -1,8 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Col, Container, Row, Modal, Button, Form } from 'react-bootstrap'
-import {BsQuestionCircle, BsBarChart} from 'react-icons/bs'
+import { Col, Container, Row, Button, Form, Image } from 'react-bootstrap'
+import image from '../assets/squirdle_logo_1.png'
+import pokelist from '../assets/pokelist.json'
 
 const GamePage = () => {
     // let navigate = useNavigate(); // For router navigation
@@ -12,10 +13,59 @@ const GamePage = () => {
     const [fourthGuess, setfourthGuess] = useState("");
     const [fifthGuess, setfifthGuess] = useState("");
     const [sixthGuess, setsixthGuess] = useState("");
+
+    const [index, setindex] = useState(0)
+
+    const [guessIndex, setguessIndex] = useState(0);
+    const [guess, setguess] = useState("");
+    const [source, setsource] = useState();
+
+    useEffect(() => {
+        const date = new Date();
+        const rand_date_num = Math.floor(((date.getUTCDay() + date.getUTCMonth() + date.getUTCFullYear()) * (date.getUTCDay() + date.getUTCMonth()) / date.getUTCDay())) % pokelist.length;
+        setsource(pokelist[rand_date_num].img);
+        setindex(rand_date_num);
+    }, []); 
+
+
+    const guessMade = () => {
+        if(guessIndex == 0){
+            setfirstGuess(guess);
+            setguessIndex(guessIndex + 1)
+        }
+        else if(guessIndex === 1){
+            setsecondGuess(guess);
+            setguessIndex(guessIndex + 1)
+        }
+        else if(guessIndex === 2){
+            setthirdGuess(guess);
+            setguessIndex(guessIndex + 1)
+        }
+        else if(guessIndex === 3){
+            setfourthGuess(guess);
+            setguessIndex(guessIndex + 1)
+        }
+        else if(guessIndex === 4){
+            setfifthGuess(guess);
+            setguessIndex(guessIndex + 1)
+        }
+        else if(guessIndex === 5){
+            setsixthGuess(guess);
+            setguessIndex(guessIndex + 1)
+        }
+        else{
+            alert("You have used all 6 guesses for today.")
+        }
+    }
  
     return (
         <Container style={{color: 'white', fontSize: "3vh"}}>
             <hr />
+            {source}
+            <Image src='../assets/bulbasaur.png' alt="image of the pokemon of the day" style={{height: 'auto', width:'100%', marginBottom: '2vh'}}/>
+
+
+
             <Row style={{paddingBottom: '2vh'}}>
                 <Col />
 
@@ -75,6 +125,18 @@ const GamePage = () => {
 
                 <Col />
             </Row>
+
+            <Row style={{paddingBottom: '2vh'}}>
+                <Col />
+
+                <Col xs={5}>
+                    <input placeholder="Make a Guess..." onChange={e=> setguess(e.target.value)} style={{fontSize: '2.3vh', minHeight: '2.2vh'}}/>
+                    <Button variant="primary" onClick={()=> guessMade()}>Submit</Button>
+                </Col>
+
+                <Col />
+            </Row>
+
         </Container>
        
     );

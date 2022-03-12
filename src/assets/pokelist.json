@@ -1,0 +1,28 @@
+[
+    {
+        "name": "bulbasaur",
+        "type1": "grass",
+        "type2": "poison",
+        "evolutionSetID": 1,
+        "img": "../assets/bulbasaur.png"
+    },
+
+    {
+        "name": "charmander",
+        "type1": "fire",
+        "type2": null,
+        "evolutionSetID": 2,
+        "img": "../assets/squirdle_logo_1.png"
+    },
+
+    {
+        "name": "squirtle",
+        "type1": "water",
+        "type2": null,
+        "evolutionSetID": 3,
+        "img": "../assets/squirdle_logo_1.png"
+    }
+
+
+
+]
